@@ -21,3 +21,7 @@ CREATE TRIGGER trg_valida_estoque
 BEFORE INSERT OR UPDATE ON estoque
 FOR EACH ROW
 EXECUTE FUNCTION fn_valida_estoque_minimo();
+
+INSERT INTO estoque (nome_item, quantidade) VALUES ('Teclado Mecânico', 10);
+
+SELECT * FROM estoque;
