@@ -17,7 +17,7 @@ RETURNS TRIGGER AS $$
 BEGIN
 
     if OLD.preco IS DISTINCT FROM NEW.preco THEN
-        INSERT INTO historico_precos (produto_id, preco_antigo, preco _novo)
+        INSERT INTO historico_precos (produto_id, preco_antigo, preco_novo)
         VALUES (NEW.id, OLD.preco, NEW.preco);
 
     END IF;
