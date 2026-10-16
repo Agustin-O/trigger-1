@@ -28,3 +28,9 @@ CREATE TRIGGER trg_atualiza_saldo
 AFTER INSERT ON movimentacoes
 FOR EACH ROW
 EXECUTE FUNCTION fn_atualiza_saldo_conta();
+
+INSERT INTO contas (cliente, saldo) VALUES ('João Silva', 500.00);
+
+INSERT INTO movimentacoes (conta_id, tipo, valor) VALUES (1, 'D', 150.00);
+
+SELECT * FROM contas WHERE id = 1;
