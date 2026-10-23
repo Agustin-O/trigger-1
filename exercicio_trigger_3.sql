@@ -41,11 +41,11 @@ END$$
 
 DELIMITER ;
 
-INSERT INTO funcionarios (nome, cargo, salario) VALUES ('Ana Silva', 'Desenvolvedora Jr', 4000.00);
+INSERT INTO funcionarios (nome, cargo, salario) 
+VALUES ('Maria Santos', 'Desenvolvedora Jr', 3500.00);
 
-UPDATE funcionarios SET cargo = 'Desenvolvedora Pleno', salario = 6000.00 WHERE id = 1;
+UPDATE funcionarios 
+SET cargo = 'Desenvolvedora Pleno', salario = 5500.00 
+WHERE nome = 'Maria Santos';
 
-UPDATE funcionarios SET nome = 'Ana Silva Costa' WHERE id = 1;
-
-SELECT * FROM funcionarios;
 SELECT * FROM historico_carreira;

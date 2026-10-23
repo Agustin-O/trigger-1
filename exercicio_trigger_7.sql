@@ -42,13 +42,22 @@ BEFORE INSERT ON itens_venda
 FOR EACH ROW
 EXECUTE FUNCTION fn_valida_e_baixa_estoque();
 
-INSERT INTO produtos (nome, estoque_atual) VALUES ('Smartphone XYZ', 10);
+TRUNCATE TABLE produtos RESTART IDENTITY CASCADE;
+TRUNCATE TABLE itens_venda RESTART IDENTITY;
 
-INSERT INTO itens_venda (produto_id, quantidade_vendida) VALUES (1, 4);
+INSERT INTO produtos (nome, estoque_atual) VALUES ('Monitor Ultrawide', 5);
 
-SELECT * FROM produtos WHERE id = 1; 
+SELECT 'Validação 1 - Estoque Inicial (Deve ser 5)' AS etapa;
+SELECT * FROM produtos;
 
-INSERT INTO itens_venda (produto_id, quantidade_vendida) VALUES (1, 7);
 
-SELECT * FROM produtos WHERE id = 1;
+INSERT INTO itens_venda (produto_id, quantidade_vendida) VALUES (1, 2);
+
+SELECT 'Validação 2 - Estoque Pós-Venda (Deve ser 3)' AS etapa;
+SELECT * FROM produtos;
+
+SELECT 'Validação 2 - Item Registrado na Tabela de Vendas' AS etapa;
 SELECT * FROM itens_venda;
+
+SELECT 'Validação 3 - Tentando vender mais do que o estoque possui (Esperado: ERRO DA TRIGGER)' AS etapa;
+INSERT INTO itens_venda (produto_id, quantidade_vendida) VALUES (1, 10);

@@ -50,15 +50,25 @@ AFTER INSERT OR UPDATE OR DELETE ON itens_pedido
 FOR EACH ROW
 EXECUTE FUNCTION fn_recalcula_valor_total_pedido();
 
-INSERT INTO pedidos (cliente) VALUES ('João Silva');
+UPDATE itens_pedido SET pedido_id = 2 WHERE id = 1;
 
-INSERT INTO itens_pedido (pedido_id, produto_nome, quantidade, preco_unitario) 
-VALUES (1, 'Notebook', 1, 3500.00),
-       (1, 'Mouse', 2, 50.00);
+TRUNCATE TABLE pedidos RESTART IDENTITY CASCADE;
+
+INSERT INTO pedidos (cliente) VALUES ('Ana Souza');
+INSERT INTO pedidos (cliente) VALUES ('Carlos Silva');
+
+INSERT INTO itens_pedido (pedido_id, produto_nome, quantidade, preco_unitario) VALUES (1, 'Mouse Gamer', 2, 150.00); -- ID 1 (Total: 300.00)
+INSERT INTO itens_pedido (pedido_id, produto_nome, quantidade, preco_unitario) VALUES (1, 'Mousepad', 1, 50.00);    -- ID 2 (Total: 50.00)
+
+SELECT 'Validação 1 - Itens inseridos no Pedido 1 (Total deve ser 350.00)' AS etapa;
 SELECT * FROM pedidos;
 
-UPDATE itens_pedido SET quantidade = 3 WHERE produto_nome = 'Mouse';
+UPDATE itens_pedido SET pedido_id = 2 WHERE id = 2;
+
+SELECT 'Validação 2 - Após mover item (Pedido 1 deve ir para 300.00 e Pedido 2 para 50.00)' AS etapa;
 SELECT * FROM pedidos;
 
-DELETE FROM itens_pedido WHERE produto_nome = 'Mouse';
+DELETE FROM itens_pedido WHERE id = 1;
+
+SELECT 'Validação 3 - Após deletar item (Pedido 1 deve zerar)' AS etapa;
 SELECT * FROM pedidos;
